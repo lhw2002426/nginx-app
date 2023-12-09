@@ -235,7 +235,6 @@ main(int argc, char *const *argv)
     if (log == NULL) {
         return 1;
     }
-
     /* STUB */
 #if (NGX_OPENSSL)
     ngx_ssl_init(log);

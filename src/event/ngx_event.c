@@ -419,7 +419,6 @@ ngx_event_init_conf(ngx_cycle_t *cycle, void *conf)
     ngx_core_conf_t  *ccf;
     ngx_listening_t  *ls;
 #endif
-
     if (ngx_get_conf(cycle->conf_ctx, ngx_events_module) == NULL) {
         ngx_log_error(NGX_LOG_EMERG, cycle->log, 0,
                       "no \"events\" section in configuration");
@@ -576,7 +575,6 @@ ngx_event_module_init(ngx_cycle_t *cycle)
     ngx_log_debug2(NGX_LOG_DEBUG_EVENT, cycle->log, 0,
                    "counter: %p, %uA",
                    ngx_connection_counter, *ngx_connection_counter);
-
     ngx_temp_number = (ngx_atomic_t *) (shared + 2 * cl);
 
     tp = ngx_timeofday();

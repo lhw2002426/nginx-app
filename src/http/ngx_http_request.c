@@ -374,7 +374,7 @@ ngx_http_init_connection(ngx_connection_t *c)
 
 static void
 ngx_http_wait_request_handler(ngx_event_t *rev)
-{
+{d
     u_char                    *p;
     size_t                     size;
     ssize_t                    n;

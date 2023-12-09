@@ -140,7 +140,6 @@ ngx_log_error_core(ngx_uint_t level, ngx_log_t *log, ngx_err_t err,
     p = ngx_vslprintf(p, last, fmt, args);
 
 #endif
-
     if (err) {
         p = ngx_log_errno(p, last, err);
     }
@@ -446,7 +445,6 @@ ngx_log_redirect_stderr(ngx_cycle_t *cycle)
 
     /* file log always exists when we are called */
     fd = ngx_log_get_file_log(cycle->log)->file->fd;
-
     if (fd != ngx_stderr) {
         if (ngx_set_stderr(fd) == NGX_FILE_ERROR) {
             ngx_log_error(NGX_LOG_ALERT, cycle->log, ngx_errno,

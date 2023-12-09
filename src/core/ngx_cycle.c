@@ -121,7 +121,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         return NULL;
     }
 
-
     n = old_cycle->paths.nelts ? old_cycle->paths.nelts : 10;
 
     if (ngx_array_init(&cycle->paths, pool, n, sizeof(ngx_path_t *))
@@ -188,7 +187,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         ngx_destroy_pool(pool);
         return NULL;
     }
-
     ngx_memzero(cycle->listening.elts, n * sizeof(ngx_listening_t));
 
 
@@ -298,7 +296,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         }
 
         module = cycle->modules[i]->ctx;
-
         if (module->init_conf) {
             if (module->init_conf(cycle,
                                   cycle->conf_ctx[cycle->modules[i]->index])
@@ -629,7 +626,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
     if (!ngx_use_stderr) {
         (void) ngx_log_redirect_stderr(cycle);
     }
-
     pool->log = cycle->log;
 
     if (ngx_init_modules(cycle) != NGX_OK) {

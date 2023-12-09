@@ -472,7 +472,6 @@ ngx_epoll_test_rdhup(ngx_cycle_t *cycle)
                       "socketpair() failed");
         return;
     }
-
     ee.events = EPOLLET|EPOLLIN|EPOLLRDHUP;
 
     if (epoll_ctl(ep, EPOLL_CTL_ADD, s[0], &ee) == -1) {
@@ -480,7 +479,6 @@ ngx_epoll_test_rdhup(ngx_cycle_t *cycle)
                       "epoll_ctl() failed");
         goto failed;
     }
-
     if (close(s[1]) == -1) {
         ngx_log_error(NGX_LOG_ALERT, cycle->log, ngx_errno,
                       "close() failed");
@@ -931,7 +929,6 @@ ngx_epoll_process_events(ngx_cycle_t *cycle, ngx_msec_t timer, ngx_uint_t flags)
             }
         }
     }
-
     return NGX_OK;
 }
 
