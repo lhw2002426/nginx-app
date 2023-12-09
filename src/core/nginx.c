@@ -235,7 +235,7 @@ main(int argc, char *const *argv)
     if (log == NULL) {
         return 1;
     }
-    printf("lhw debug after ngx log init\n");
+    //printf("lhw debug after ngx log init\n");
     /* STUB */
 #if (NGX_OPENSSL)
     ngx_ssl_init(log);
@@ -254,7 +254,7 @@ main(int argc, char *const *argv)
     if (init_cycle.pool == NULL) {
         return 1;
     }
-    printf("lhw debug after ngx create pool\n");
+    //printf("lhw debug after ngx create pool\n");
 
     if (ngx_save_argv(&init_cycle, argc, argv) != NGX_OK) {
         return 1;
@@ -267,7 +267,7 @@ main(int argc, char *const *argv)
     if (ngx_os_init(log) != NGX_OK) {
         return 1;
     }
-    printf("lhw debug after ngx os init\n");
+    //printf("lhw debug after ngx os init\n");
 
     /*
      * ngx_crc32_table_init() requires ngx_cacheline_size set in ngx_os_init()
@@ -290,10 +290,10 @@ main(int argc, char *const *argv)
     if (ngx_preinit_modules() != NGX_OK) {
         return 1;
     }
-    printf("lhw debug after ngx preinit modules\n");
+    //printf("lhw debug after ngx preinit modules\n");
 
     cycle = ngx_init_cycle(&init_cycle);
-    printf("lhw debug after ngx init cycle\n");
+    //printf("lhw debug after ngx init cycle\n");
     if (cycle == NULL) {
         if (ngx_test_config) {
             ngx_log_stderr(0, "configuration file %s test failed",
@@ -303,7 +303,7 @@ main(int argc, char *const *argv)
         return 1;
     }
     
-    printf("lhw debug before ngx write fd\n");
+    //printf("lhw debug before ngx write fd\n");
     if (ngx_test_config) {
         if (!ngx_quiet_mode) {
             ngx_log_stderr(0, "configuration file %s test is successful",
@@ -326,14 +326,14 @@ main(int argc, char *const *argv)
                 ngx_write_stdout(NGX_LINEFEED);
             }
         }
-        printf("lhw debug in ngx write fd normal return\n");
+        //printf("lhw debug in ngx write fd normal return\n");
         return 0;
     }
 
     if (ngx_signal) {
         return ngx_signal_process(cycle, ngx_signal);
     }
-    printf("lhw debug after ngx signal process\n");
+    //printf("lhw debug after ngx signal process\n");
 
     ngx_os_status(cycle->log);
 
@@ -362,7 +362,7 @@ main(int argc, char *const *argv)
     if (ngx_inherited) {
         ngx_daemonized = 1;
     }
-    printf("lhw debug after deal daemon\n");
+    //printf("lhw debug after deal daemon\n");
 
 #endif
 
@@ -370,12 +370,12 @@ main(int argc, char *const *argv)
         return 1;
     }
 
-    printf("lhw debug after ngx create pidfile2\n");
+    //printf("lhw debug after ngx create pidfile2\n");
 
     if (ngx_log_redirect_stderr(cycle) != NGX_OK) {
         return 1;
     }
-    printf("lhw debug after ngx log redirect stderr\n");
+    //printf("lhw debug after ngx log redirect stderr\n");
 
     if (log->file->fd != ngx_stderr) {
         if (ngx_close_file(log->file->fd) == NGX_FILE_ERROR) {
@@ -387,14 +387,14 @@ main(int argc, char *const *argv)
     ngx_use_stderr = 0;
 
     if (ngx_process == NGX_PROCESS_SINGLE) {
-        printf("lhw debug before ngx single process cycle\n");
+        //printf("lhw debug before ngx single process cycle\n");
         ngx_single_process_cycle(cycle);
 
     } else {
-        printf("lhw debug before ngx master process cycle\n");
+        //printf("lhw debug before ngx master process cycle\n");
         ngx_master_process_cycle(cycle);
     }
-    printf("lhw debug normal return\n");
+    //printf("lhw debug normal return\n");
 
 
     return 0;
@@ -1154,7 +1154,7 @@ ngx_core_module_init_conf(ngx_cycle_t *cycle, void *conf)
         ngx_set_errno(0);
         pwd = getpwnam(NGX_USER);
         if (pwd == NULL) {
-            printf("getpwnam first failed in main\n");
+            //printf("lhw debug getpwnam first failed in main\n");
             ngx_log_error(NGX_LOG_EMERG, cycle->log, ngx_errno,
                           "getpwnam(\"" NGX_USER "\") failed");
             return NGX_CONF_ERROR;

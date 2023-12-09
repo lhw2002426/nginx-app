@@ -104,7 +104,7 @@ ngx_linux_sendfile_chain(ngx_connection_t *c, ngx_chain_t *in, off_t limit)
             if (c->tcp_nodelay == NGX_TCP_NODELAY_SET) {
 
                 tcp_nodelay = 0;
-                printf("lhw debug before ngx_linux_sendfile_chain setsockopt\n");
+                //printf("lhw debug before ngx_linux_sendfile_chain setsockopt\n");
                 if (setsockopt(c->fd, IPPROTO_TCP, TCP_NODELAY,
                                (const void *) &tcp_nodelay, sizeof(int)) == -1)
                 {

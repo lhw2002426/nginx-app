@@ -2172,7 +2172,7 @@ static ngx_int_t
 ngx_http_upstream_send_request_body(ngx_http_request_t *r,
     ngx_http_upstream_t *u, ngx_uint_t do_write)
 {
-    printf("lhw debug in ngx_http_upstream_send_request_body\n");
+    //printf("lhw debug in ngx_http_upstream_send_request_body\n");
     ngx_int_t                  rc;
     ngx_chain_t               *out, *cl, *ln;
     ngx_connection_t          *c;
@@ -2994,7 +2994,7 @@ ngx_http_upstream_process_trailers(ngx_http_request_t *r,
 static void
 ngx_http_upstream_send_response(ngx_http_request_t *r, ngx_http_upstream_t *u)
 {
-    printf("lhw debug ngx_http_upstream_send_response\n");
+    //printf("lhw debug ngx_http_upstream_send_response\n");
     ssize_t                    n;
     ngx_int_t                  rc;
     ngx_event_pipe_t          *p;
@@ -3338,7 +3338,7 @@ ngx_http_upstream_send_response(ngx_http_request_t *r, ngx_http_upstream_t *u)
 static void
 ngx_http_upstream_upgrade(ngx_http_request_t *r, ngx_http_upstream_t *u)
 {
-    printf("lhw debug in ngx_http_upstream_upgrade\n");
+    //printf("lhw debug in ngx_http_upstream_upgrade\n");
     ngx_connection_t          *c;
     ngx_http_core_loc_conf_t  *clcf;
 

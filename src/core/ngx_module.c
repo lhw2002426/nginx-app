@@ -46,7 +46,7 @@ ngx_cycle_modules(ngx_cycle_t *cycle)
      * create a list of modules to be used for this cycle,
      * copy static modules to it
      */
-    printf("lhw debug in ngx_cycle_modules\n");
+    //printf("lhw debug in ngx_cycle_modules\n");
     cycle->modules = ngx_pcalloc(cycle->pool, (ngx_max_module + 1)
                                               * sizeof(ngx_module_t *));
     if (cycle->modules == NULL) {
@@ -69,7 +69,7 @@ ngx_init_modules(ngx_cycle_t *cycle)
 
     for (i = 0; cycle->modules[i]; i++) {
         if (cycle->modules[i]->init_module) {
-            printf("        lhw debug in ngx init modules name:%s func:%p i:%d\n",cycle->modules[i]->name, cycle->modules[i]->init_module,i);
+            //printf("hw debug in ngx init modules name:%s func:%p i:%d\n",cycle->modules[i]->name, cycle->modules[i]->init_module,i);
             if (cycle->modules[i]->init_module(cycle) != NGX_OK) {
                 return NGX_ERROR;
             }

@@ -80,7 +80,7 @@ ngx_time_init(void)
 void
 ngx_time_update(void)
 {
-    printf("lhw debug in ngx_time_update\n");
+    //printf("lhw debug in ngx_time_update\n");
     u_char          *p0, *p1, *p2, *p3, *p4;
     ngx_tm_t         tm, gmt;
     time_t           sec;
@@ -89,7 +89,7 @@ ngx_time_update(void)
     struct timeval   tv;
 
     if (!ngx_trylock(&ngx_time_lock)) {
-        printf("lhw debug in ngx_time_update try lock failed\n");
+        //printf("lhw debug in ngx_time_update try lock failed\n");
         return;
     }
 
@@ -102,7 +102,7 @@ ngx_time_update(void)
 
     tp = &cached_time[slot];
 
-    printf("lhw debug in ngx_time_update tp->sec : %d sec: %d\n",tp->sec, sec);
+    //printf("lhw debug in ngx_time_update tp->sec : %d sec: %d\n",tp->sec, sec);
     if (tp->sec == sec) {
         tp->msec = msec;
         ngx_unlock(&ngx_time_lock);
@@ -186,7 +186,7 @@ ngx_time_update(void)
 
     ngx_cached_time = tp;
     ngx_cached_http_time.data = p0;
-    printf("lhw debug in ngx_time_update ngx_cached_err_log_time.data %p\n",p1);
+    //printf("lhw debug in ngx_time_update ngx_cached_err_log_time.data %p\n",p1);
     ngx_cached_err_log_time.data = p1;
     ngx_cached_http_log_time.data = p2;
     ngx_cached_http_log_iso8601.data = p3;
@@ -270,7 +270,7 @@ ngx_time_sigsafe_update(void)
 
     ngx_memory_barrier();
 
-    printf("lhw debug in ngx_time_sigsafe_update ngx_cached_err_log_time.data %p\n",p);
+    //printf("lhw debug in ngx_time_sigsafe_update ngx_cached_err_log_time.data %p\n",p);
     ngx_cached_err_log_time.data = p;
     ngx_cached_syslog_time.data = p2;
 

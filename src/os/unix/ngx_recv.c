@@ -13,7 +13,7 @@
 ssize_t
 ngx_unix_recv(ngx_connection_t *c, u_char *buf, size_t size)
 {
-    printf("lhw debug in ngx_unix_recv\n");
+    //printf("lhw debug in ngx_unix_recv\n");
     ssize_t       n;
     ngx_err_t     err;
     ngx_event_t  *rev;
@@ -69,7 +69,7 @@ ngx_unix_recv(ngx_connection_t *c, u_char *buf, size_t size)
 #endif
 
     do {
-        printf("lhw debug in ngx_unix_recv loop\n");
+        //printf("lhw debug in ngx_unix_recv loop\n");
         n = recv(c->fd, buf, size, 0);
 
         ngx_log_debug3(NGX_LOG_DEBUG_EVENT, c->log, 0,
