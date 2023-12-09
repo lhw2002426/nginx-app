@@ -188,7 +188,6 @@ ngx_event_recvmsg(ngx_event_t *ev)
             rev->ready = 1;
             rev->active = 0;
 
-            printf("lhw debug recv handler in ngx_event_recvmsg\n");
             rev->handler(rev);
 
             if (c->udp) {

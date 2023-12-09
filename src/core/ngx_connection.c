@@ -494,7 +494,7 @@ ngx_open_listening_sockets(ngx_cycle_t *cycle)
                               ngx_socket_n " %V failed", &ls[i].addr_text);
                 return NGX_ERROR;
             }
-            printf("lhw debug in ngx_connection.c find ioctl0\n");
+
             if (ls[i].type != SOCK_DGRAM || !ngx_test_config) {
 
                 if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR,
@@ -514,7 +514,7 @@ ngx_open_listening_sockets(ngx_cycle_t *cycle)
                     return NGX_ERROR;
                 }
             }
-            printf("lhw debug in ngx_connection.c find ioctl1\n");
+
 #if (NGX_HAVE_REUSEPORT)
 
             if (ls[i].reuseport && !ngx_test_config) {
@@ -581,6 +581,7 @@ ngx_open_listening_sockets(ngx_cycle_t *cycle)
             }
 #endif
             /* TODO: close on exit */
+
             if (!(ngx_event_flags & NGX_USE_IOCP_EVENT)) {
                 if (ngx_nonblocking(s) == -1) {
                     ngx_log_error(NGX_LOG_EMERG, log, ngx_socket_errno,
@@ -596,7 +597,6 @@ ngx_open_listening_sockets(ngx_cycle_t *cycle)
                     return NGX_ERROR;
                 }
             }
-            printf("lhw debug in ngx_connection.c find ioctl2\n");
 
             ngx_log_debug2(NGX_LOG_DEBUG_CORE, log, 0,
                            "bind() %V #%d ", &ls[i].addr_text, s);
@@ -1175,7 +1175,6 @@ ngx_free_connection(ngx_connection_t *c)
 void
 ngx_close_connection(ngx_connection_t *c)
 {
-    printf("lhw debug in ngx_close_connection\n");
     ngx_err_t     err;
     ngx_uint_t    log_error, level;
     ngx_socket_t  fd;
@@ -1195,7 +1194,6 @@ ngx_close_connection(ngx_connection_t *c)
 
     if (!c->shared) {
         if (ngx_del_conn) {
-            printf("lhw debug before ngx del conn(ngx_event_actions.del_conn)\n");
             ngx_del_conn(c, NGX_CLOSE_EVENT);
 
         } else {
@@ -1233,9 +1231,7 @@ ngx_close_connection(ngx_connection_t *c)
         return;
     }
 
-    printf("lhw debug in close conn close socket\n");
     if (ngx_close_socket(fd) == -1) {
-        printf("lhw debug in close conn close socket failed\n");
 
         err = ngx_socket_errno;
 
@@ -1457,7 +1453,6 @@ ngx_tcp_nodelay(ngx_connection_t *c)
 
     tcp_nodelay = 1;
 
-    printf("lhw debug before ngx_tcp_nodelay setsockopt\n");
     if (setsockopt(c->fd, IPPROTO_TCP, TCP_NODELAY,
                    (const void *) &tcp_nodelay, sizeof(int))
         == -1)

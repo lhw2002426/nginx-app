@@ -190,7 +190,6 @@ ngx_mail_init_connection(ngx_connection_t *c)
         return;
     }
 
-    printf("lhw debug recv handler in ngx_mail_init_connection\n");
     rev->handler(rev);
 }
 

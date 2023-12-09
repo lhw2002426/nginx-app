@@ -183,7 +183,6 @@ ngx_devpoll_init(ngx_cycle_t *cycle, ngx_msec_t timer)
 
     ngx_io = ngx_os_io;
 
-    printf("lhw debug ngx_event_actions = ngx_devpoll_module_ctx.actions\n");
     ngx_event_actions = ngx_devpoll_module_ctx.actions;
 
     ngx_event_flags = NGX_USE_LEVEL_EVENT|NGX_USE_FD_EVENT;
@@ -507,7 +506,6 @@ ngx_devpoll_process_events(ngx_cycle_t *cycle, ngx_msec_t timer,
             } else {
                 instance = rev->instance;
 
-                printf("lhw debug recv handler in ngx_devpoll_process_events\n");
                 rev->handler(rev);
 
                 if (c->fd == -1 || rev->instance != instance) {

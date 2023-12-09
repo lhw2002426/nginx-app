@@ -7,7 +7,6 @@
 
 #include <ngx_config.h>
 #include <ngx_core.h>
-#include <string.h>
 
 
 #if (NGX_THREADS)
@@ -38,12 +37,9 @@ ngx_read_file(ngx_file_t *file, u_char *buf, size_t size, off_t offset)
 
 #if (NGX_HAVE_PREAD)
 
-    printf("before pread\n");
     n = pread(file->fd, buf, size, offset);
-    printf("after pread2\n");
 
     if (n == -1) {
-        printf("n error: %d\n",n);
         ngx_log_error(NGX_LOG_CRIT, file->log, ngx_errno,
                       "pread() \"%s\" failed", file->name.data);
         return NGX_ERROR;
@@ -52,7 +48,6 @@ ngx_read_file(ngx_file_t *file, u_char *buf, size_t size, off_t offset)
 #else
 
     if (file->sys_offset != offset) {
-        printf("offset error sysoffset: %d, offset: %d\n",file->sys_offset,offset);
         if (lseek(file->fd, offset, SEEK_SET) == -1) {
             ngx_log_error(NGX_LOG_CRIT, file->log, ngx_errno,
                           "lseek() \"%s\" failed", file->name.data);
@@ -62,9 +57,7 @@ ngx_read_file(ngx_file_t *file, u_char *buf, size_t size, off_t offset)
         file->sys_offset = offset;
     }
 
-    printf("before read size: %d buflen: %d\n",size, strlen(buf));
     n = read(file->fd, buf, size);
-    printf("after read\n");
 
     if (n == -1) {
         ngx_log_error(NGX_LOG_CRIT, file->log, ngx_errno,
@@ -77,8 +70,6 @@ ngx_read_file(ngx_file_t *file, u_char *buf, size_t size, off_t offset)
 #endif
 
     file->offset += n;
-
-    printf("ngx_read_file normally return\n");
 
     return n;
 }

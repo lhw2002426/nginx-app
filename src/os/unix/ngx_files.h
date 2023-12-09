@@ -198,7 +198,7 @@ void ngx_close_file_mapping(ngx_file_mapping_t *fm);
 
 
 #define ngx_realpath(p, r)       (u_char *) realpath((char *) p, (char *) r)
-#define ngx_realpath_n           "()"
+#define ngx_realpath_n           "realpath()"
 #define ngx_getcwd(buf, size)    (getcwd((char *) buf, size) != NULL)
 #define ngx_getcwd_n             "getcwd()"
 #define ngx_path_separator(c)    ((c) == '/')

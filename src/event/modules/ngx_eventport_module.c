@@ -276,7 +276,6 @@ ngx_eventport_init(ngx_cycle_t *cycle, ngx_msec_t timer)
 
     ngx_io = ngx_os_io;
 
-    printf("lhw debug ngx_event_actions = ngx_eventport_module_ctx.actions;\n");
     ngx_event_actions = ngx_eventport_module_ctx.actions;
 
     return NGX_OK;
@@ -569,7 +568,6 @@ ngx_eventport_process_events(ngx_cycle_t *cycle, ngx_msec_t timer,
                     ngx_post_event(rev, queue);
 
                 } else {
-                    printf("lhw debug recv handler in ngx_eventport_process_events\n");
                     rev->handler(rev);
 
                     if (ev->closed || ev->instance != instance) {

@@ -519,7 +519,6 @@ ngx_http_v2_write_handler(ngx_event_t *wev)
 ngx_int_t
 ngx_http_v2_send_output_queue(ngx_http_v2_connection_t *h2c)
 {
-    printf("lhw debug in ngx_http_v2_send_output_queue\n");
     int                        tcp_nodelay;
     ngx_chain_t               *cl;
     ngx_event_t               *wev;
@@ -4597,8 +4596,6 @@ ngx_http_v2_terminate_stream(ngx_http_v2_connection_t *h2c,
     fc->error = 1;
 
     rev = fc->read;
-    
-    printf("lhw debug recv handler in ngx_http_v2_terminate_stream\n");
     rev->handler(rev);
 
     return NGX_OK;

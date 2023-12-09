@@ -107,7 +107,6 @@ typedef struct iocb  ngx_aiocb_t;
 #include <netinet/udp.h>
 #endif
 
-#include<sys/select.h>
 
 #define NGX_LISTEN_BACKLOG        511
 

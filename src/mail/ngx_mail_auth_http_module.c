@@ -161,7 +161,6 @@ static ngx_str_t   ngx_mail_smtp_errcode = ngx_string("535 5.7.0");
 void
 ngx_mail_auth_http_init(ngx_mail_session_t *s)
 {
-    printf("lhw debug in ngx_mail_auth_http_init\n");
     ngx_int_t                   rc;
     ngx_pool_t                 *pool;
     ngx_mail_auth_http_ctx_t   *ctx;
@@ -236,7 +235,6 @@ ngx_mail_auth_http_init(ngx_mail_session_t *s)
 static void
 ngx_mail_auth_http_write_handler(ngx_event_t *wev)
 {
-    printf("lhw debug in ngx_mail_auth_http_write_handle\n");
     ssize_t                     n, size;
     ngx_connection_t           *c;
     ngx_mail_session_t         *s;
@@ -301,7 +299,6 @@ ngx_mail_auth_http_write_handler(ngx_event_t *wev)
 static void
 ngx_mail_auth_http_read_handler(ngx_event_t *rev)
 {
-    printf("lhw debug in ngx_mail_auth_http_read_handle\n");
     ssize_t                     n, size;
     ngx_connection_t          *c;
     ngx_mail_session_t        *s;
@@ -466,7 +463,6 @@ static void
 ngx_mail_auth_http_process_headers(ngx_mail_session_t *s,
     ngx_mail_auth_http_ctx_t *ctx)
 {
-    printf("lhw debug in ngx_mail_auth_http_process_headers\n");
     u_char      *p;
     time_t       timer;
     size_t       len, size;
@@ -899,7 +895,6 @@ ngx_mail_auth_sleep_handler(ngx_event_t *rev)
         ngx_add_timer(rev, cscf->timeout);
 
         if (rev->ready) {
-            printf("lhw debug recv handler in ngx_mail_auth_sleep_handler\n");
             rev->handler(rev);
             return;
         }

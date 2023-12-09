@@ -204,7 +204,6 @@ ngx_http_header_t  ngx_http_headers_in[] = {
 void
 ngx_http_init_connection(ngx_connection_t *c)
 {
-    printf("lhw debug in ngx_http_init_connection\n");
     ngx_uint_t                 i;
     ngx_event_t               *rev;
     struct sockaddr_in        *sin;
@@ -357,7 +356,6 @@ ngx_http_init_connection(ngx_connection_t *c)
             return;
         }
 
-        printf("lhw debug recv handler\n");
         rev->handler(rev);
         return;
     }
@@ -377,7 +375,6 @@ ngx_http_init_connection(ngx_connection_t *c)
 static void
 ngx_http_wait_request_handler(ngx_event_t *rev)
 {
-    printf("lhw debug in ngx_http_wait_request_handler\n");
     u_char                    *p;
     size_t                     size;
     ssize_t                    n;
@@ -508,7 +505,6 @@ ngx_http_wait_request_handler(ngx_event_t *rev)
 ngx_http_request_t *
 ngx_http_create_request(ngx_connection_t *c)
 {
-    printf("lhw debug in ngx_http_create_request\n");
     ngx_http_request_t        *r;
     ngx_http_log_ctx_t        *ctx;
     ngx_http_core_loc_conf_t  *clcf;
@@ -2705,7 +2701,6 @@ ngx_http_terminate_handler(ngx_http_request_t *r)
 static void
 ngx_http_finalize_connection(ngx_http_request_t *r)
 {
-    printf("lhw debug in ngx_http_finalize_connection\n");
     ngx_http_core_loc_conf_t  *clcf;
 
 #if (NGX_HTTP_V2)
@@ -2761,14 +2756,11 @@ ngx_http_finalize_connection(ngx_http_request_t *r)
                 || r->connection->read->ready
                 || r->connection->pipeline)))
     {
-        printf("lhw debug in ngx_http_finalize_connection before ngx_http_set_lingering_close\n");
         ngx_http_set_lingering_close(r->connection);
         return;
     }
 
-    printf("lhw debug in ngx_http_finalize_connection before ngx_http_close_request\n");
     ngx_http_close_request(r, 0);
-    printf("lhw debug in ngx_http_finalize_connection after ngx_http_close_request\n");
 }
 
 
@@ -3034,7 +3026,6 @@ closed:
 static void
 ngx_http_set_keepalive(ngx_http_request_t *r)
 {
-    printf("lhw debug in ngx_http_set_keepalive\n");
     int                        tcp_nodelay;
     ngx_buf_t                 *b, *f;
     ngx_chain_t               *cl, *ln;
@@ -3088,7 +3079,6 @@ ngx_http_set_keepalive(ngx_http_request_t *r)
 
             cl = ngx_alloc_chain_link(c->pool);
             if (cl == NULL) {
-                printf("lhw debug in ngx_http_set_keepalive close connection for no alloc chain\n");
                 ngx_http_close_request(r, 0);
                 return;
             }
@@ -3109,7 +3099,6 @@ ngx_http_set_keepalive(ngx_http_request_t *r)
     c->data = hc;
 
     if (ngx_handle_read_event(rev, 0) != NGX_OK) {
-        printf("lhw debug in ngx_http_set_keepalive close connection for fail to read event\n");
         ngx_http_close_connection(c);
         return;
     }
@@ -3125,7 +3114,6 @@ ngx_http_set_keepalive(ngx_http_request_t *r)
 
         r = ngx_http_create_request(c);
         if (r == NULL) {
-            
             ngx_http_close_connection(c);
             return;
         }
@@ -3231,7 +3219,6 @@ ngx_http_set_keepalive(ngx_http_request_t *r)
     }
 
     if (tcp_nodelay && clcf->tcp_nodelay && ngx_tcp_nodelay(c) != NGX_OK) {
-        printf("lhw debug in ngx_http_set_keepalive close connection for tcp nodelay fail\n");
         ngx_http_close_connection(c);
         return;
     }
@@ -3249,14 +3236,12 @@ ngx_http_set_keepalive(ngx_http_request_t *r)
     if (rev->ready) {
         ngx_post_event(rev, &ngx_posted_events);
     }
-    printf("lhw debug in ngx_http_set_keepalive end\n");
 }
 
 
 static void
 ngx_http_keepalive_handler(ngx_event_t *rev)
 {
-    printf("lhw debug in ngx_http_keepalive_handler\n");
     size_t             size;
     ssize_t            n;
     ngx_buf_t         *b;
@@ -3267,11 +3252,10 @@ ngx_http_keepalive_handler(ngx_event_t *rev)
     ngx_log_debug0(NGX_LOG_DEBUG_HTTP, c->log, 0, "http keepalive handler");
 
     if (rev->timedout || c->close) {
-        printf("lhw debug in ngx_http_keepalive_handler close for connection not exist\n");
         ngx_http_close_connection(c);
         return;
     }
-    printf("lhw debug in ngx_http_keepalive_handler after timeout judge\n");
+
 #if (NGX_HAVE_KQUEUE)
 
     if (ngx_event_flags & NGX_USE_KQUEUE_EVENT) {
@@ -3302,10 +3286,9 @@ ngx_http_keepalive_handler(ngx_event_t *rev)
          * However, the c->buffer->start and c->buffer->end were not changed
          * to keep the buffer size.
          */
-        printf("lhw debug in ngx_http_keepalive_handler buffer is null\n");
+
         b->pos = ngx_palloc(c->pool, size);
         if (b->pos == NULL) {
-            printf("lhw debug in ngx_http_keepalive_handler close for buffer no pos\n");
             ngx_http_close_connection(c);
             return;
         }
@@ -3323,14 +3306,11 @@ ngx_http_keepalive_handler(ngx_event_t *rev)
     c->log_error = NGX_ERROR_IGNORE_ECONNRESET;
     ngx_set_socket_errno(0);
 
-    printf("lhw debug in ngx_http_keepalive_handler before recv\n");
     n = c->recv(c, b->last, size);
-    printf("lhw debug in ngx_http_keepalive_handler after recv\n");
     c->log_error = NGX_ERROR_INFO;
 
     if (n == NGX_AGAIN) {
         if (ngx_handle_read_event(rev, 0) != NGX_OK) {
-            printf("lhw debug in ngx_http_keepalive_handler close for cannot read event\n");
             ngx_http_close_connection(c);
             return;
         }
@@ -3353,7 +3333,6 @@ ngx_http_keepalive_handler(ngx_event_t *rev)
     }
 
     if (n == NGX_ERROR) {
-        printf("lhw debug in ngx_http_keepalive_handler close for recv err\n");
         ngx_http_close_connection(c);
         return;
     }
@@ -3361,7 +3340,6 @@ ngx_http_keepalive_handler(ngx_event_t *rev)
     c->log->handler = NULL;
 
     if (n == 0) {
-        printf("lhw debug in ngx_http_keepalive_handler close for recv res is 0 socketfd: %d addr_text %s\n",c->fd, c->addr_text.data);
         ngx_log_error(NGX_LOG_INFO, c->log, ngx_socket_errno,
                       "client %V closed keepalive connection", &c->addr_text);
         ngx_http_close_connection(c);
@@ -3375,11 +3353,9 @@ ngx_http_keepalive_handler(ngx_event_t *rev)
 
     c->idle = 0;
     ngx_reusable_connection(c, 0);
-    printf("lhw debug in ngx_http_keepalive_handler after ngx_reusable_connection\n");
 
     c->data = ngx_http_create_request(c);
     if (c->data == NULL) {
-        printf("lhw debug in ngx_http_keepalive_handler close for data null\n");
         ngx_http_close_connection(c);
         return;
     }
@@ -3617,7 +3593,6 @@ ngx_http_post_action(ngx_http_request_t *r)
 static void
 ngx_http_close_request(ngx_http_request_t *r, ngx_int_t rc)
 {
-    printf("lhw debug in ngx_http_close_request\n");
     ngx_connection_t  *c;
 
     r = r->main;
@@ -3759,7 +3734,6 @@ ngx_http_log_request(ngx_http_request_t *r)
 void
 ngx_http_close_connection(ngx_connection_t *c)
 {
-    printf("lhw debug in ngx_http_close_connection\n");
     ngx_pool_t  *pool;
 
     ngx_log_debug1(NGX_LOG_DEBUG_HTTP, c->log, 0,

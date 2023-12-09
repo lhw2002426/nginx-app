@@ -71,10 +71,8 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         return NULL;
     }
     pool->log = log;
-    printf("    lhw debug after ngx create pool\n");
 
     cycle = ngx_pcalloc(pool, sizeof(ngx_cycle_t));
-    printf("lhw debug find page fault 0\n");
     if (cycle == NULL) {
         ngx_destroy_pool(pool);
         return NULL;
@@ -122,7 +120,7 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         ngx_destroy_pool(pool);
         return NULL;
     }
-    printf("lhw debug find page fault 1\n");
+
 
     n = old_cycle->paths.nelts ? old_cycle->paths.nelts : 10;
 
@@ -190,7 +188,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         ngx_destroy_pool(pool);
         return NULL;
     }
-    printf("lhw debug find page fault 2\n");
 
     ngx_memzero(cycle->listening.elts, n * sizeof(ngx_listening_t));
 
@@ -230,10 +227,9 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         return NULL;
     }
 
-    printf("lhw debug find page fault 3\n");
+
     for (i = 0; cycle->modules[i]; i++) {
         if (cycle->modules[i]->type != NGX_CORE_MODULE) {
-            printf("lhw debug in ngx_init_cycle not a core module index: %d name: %s\n",cycle->modules[i]->index,cycle->modules[i]->name);
             continue;
         }
 
@@ -242,16 +238,10 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         if (module->create_conf) {
             rv = module->create_conf(cycle);
             if (rv == NULL) {
-                printf("lhw debug in ngx_init_cycle rv = null index: %d name: %s\n",cycle->modules[i]->index,cycle->modules[i]->name);
                 ngx_destroy_pool(pool);
                 return NULL;
             }
             cycle->conf_ctx[cycle->modules[i]->index] = rv;
-            printf("lhw debug in ngx_init_cycle cycle->conf_ctx index: %d content: %p name: %s\n",cycle->modules[i]->index,rv,cycle->modules[i]->name);
-        }
-        else
-        {
-            printf("lhw debug in ngx_init_cycle no create conf index: %d name: %s\n",cycle->modules[i]->index,cycle->modules[i]->name);
         }
     }
 
@@ -285,7 +275,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
     log->log_level = NGX_LOG_DEBUG_ALL;
 #endif
 
-    printf("lhw debug find page fault 4\n");
     if (ngx_conf_param(&conf) != NGX_CONF_OK) {
         environ = senv;
         ngx_destroy_cycle_pools(&conf);
@@ -303,14 +292,13 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
                        cycle->conf_file.data);
     }
 
-    printf("lhw debug find page fault 5\n");
     for (i = 0; cycle->modules[i]; i++) {
         if (cycle->modules[i]->type != NGX_CORE_MODULE) {
             continue;
         }
 
         module = cycle->modules[i]->ctx;
-        printf("lhw debug find page fault 7 %s\n",cycle->modules[i]->name);
+
         if (module->init_conf) {
             if (module->init_conf(cycle,
                                   cycle->conf_ctx[cycle->modules[i]->index])
@@ -322,7 +310,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
             }
         }
     }
-    printf("lhw debug find page fault 6\n");
 
     if (ngx_process == NGX_PROCESS_SIGNALLER) {
         return cycle;
@@ -372,7 +359,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
     if (ngx_log_open_default(cycle) != NGX_OK) {
         goto failed;
     }
-    printf("    lhw debug after ngx log open default\n");
 
     /* open the new files */
 
@@ -411,7 +397,6 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
         }
 
 #if !(NGX_WIN32)
-        printf("lhw debug fcntl argv: fd: %d cmd: %d %d\n",file[i].fd, F_SETFD, FD_CLOEXEC);
         if (fcntl(file[i].fd, F_SETFD, FD_CLOEXEC) == -1) {
             ngx_log_error(NGX_LOG_EMERG, log, ngx_errno,
                           "fcntl(FD_CLOEXEC) \"%s\" failed",
@@ -633,26 +618,24 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
     if (ngx_open_listening_sockets(cycle) != NGX_OK) {
         goto failed;
     }
-    printf("    lhw debug after ngx open listening sockets\n");
 
     if (!ngx_test_config) {
         ngx_configure_listening_sockets(cycle);
     }
-    
+
 
     /* commit the new cycle configuration */
 
     if (!ngx_use_stderr) {
         (void) ngx_log_redirect_stderr(cycle);
     }
-    printf("    lhw debug after ngx log redirect stderr\n");
+
     pool->log = cycle->log;
 
     if (ngx_init_modules(cycle) != NGX_OK) {
         /* fatal */
         exit(1);
     }
-    printf("    lhw debug after ngx init modules\n");
 
 
     /* close and delete stuff that lefts from an old cycle */

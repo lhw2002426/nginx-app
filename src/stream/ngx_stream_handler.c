@@ -198,7 +198,6 @@ ngx_stream_init_connection(ngx_connection_t *c)
         return;
     }
 
-    printf("lhw debug recv handler in ngx_stream_init_connection\n");
     rev->handler(rev);
 }
 
@@ -351,7 +350,6 @@ ngx_stream_close_connection(ngx_connection_t *c)
 
     pool = c->pool;
 
-    printf("lhw debug in ngx_stream_close_connection close connection\n");
     ngx_close_connection(c);
 
     ngx_destroy_pool(pool);
