@@ -1,0 +1,9 @@
+make depend && make _all
+make[1]: Entering directory '/home/oslab/Desktop/rukos/apps/c/nginx/objs/openssl-1.1.1w'
+make[1]: Leaving directory '/home/oslab/Desktop/rukos/apps/c/nginx/objs/openssl-1.1.1w'
+make[1]: Entering directory '/home/oslab/Desktop/rukos/apps/c/nginx/objs/openssl-1.1.1w'
+rm -f apps/openssl
+${LDCMD:-aarch64-linux-musl-gcc} -Wa,--noexecstack -nostdinc -fno-builtin -ffreestanding -Wall -I/home/oslab/Desktop/rukos/ulib/ruxmusl/install/include -O3 -Wno-format -L.  -nostdlib -static -no-pie \
+	-o apps/openssl apps/asn1pars.o apps/ca.o apps/ciphers.o apps/cms.o apps/crl.o apps/crl2p7.o apps/dgst.o apps/dhparam.o apps/dsa.o apps/dsaparam.o apps/ec.o apps/ecparam.o apps/enc.o apps/engine.o apps/errstr.o apps/gendsa.o apps/genpkey.o apps/genrsa.o apps/nseq.o apps/ocsp.o apps/openssl.o apps/passwd.o apps/pkcs12.o apps/pkcs7.o apps/pkcs8.o apps/pkey.o apps/pkeyparam.o apps/pkeyutl.o apps/prime.o apps/rand.o apps/rehash.o apps/req.o apps/rsa.o apps/rsautl.o apps/s_client.o apps/s_server.o apps/s_time.o apps/sess_id.o apps/smime.o apps/speed.o apps/spkac.o apps/srp.o apps/storeutl.o apps/ts.o apps/verify.o apps/version.o apps/x509.o \
+	 apps/libapps.a -lssl -lcrypto -ldl 
+make[1]: Leaving directory '/home/oslab/Desktop/rukos/apps/c/nginx/objs/openssl-1.1.1w'
